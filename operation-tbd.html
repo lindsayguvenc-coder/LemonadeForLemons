@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operation [TBD] — Making Lemonade Out of Lemons</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lemon: #FFE135;
+    --lemon-dark: #F5C800;
+    --lemon-deep: #C49A00;
+    --green: #5B8C3E;
+    --green-light: #7EB55A;
+    --warm-white: #FFFDF0;
+    --warm-gray: #F5F0E0;
+    --text-dark: #2C2416;
+    --text-mid: #5C4F2E;
+    --accent-orange: #FF8C42;
+    --accent-red: #E84B2E;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--warm-white);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: var(--lemon);
+    padding: 3rem 1.5rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '🍋';
+    font-size: 12rem;
+    position: absolute;
+    top: -2rem;
+    left: -2rem;
+    opacity: 0.12;
+    transform: rotate(-20deg);
+  }
+
+  .hero::after {
+    content: '🍋';
+    font-size: 10rem;
+    position: absolute;
+    bottom: -1rem;
+    right: -1rem;
+    opacity: 0.12;
+    transform: rotate(15deg);
+  }
+
+  .operation-label {
+    display: inline-block;
+    background: var(--text-dark);
+    color: var(--lemon);
+    font-family: 'Fredoka One', cursive;
+    font-size: 0.9rem;
+    letter-spacing: 0.2em;
+    padding: 0.3rem 1rem;
+    border-radius: 2rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+
+  .hero h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(2.8rem, 8vw, 5rem);
+    color: var(--text-dark);
+    line-height: 1.05;
+    margin-bottom: 0.75rem;
+  }
+
+  .tagline {
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
+    font-weight: 800;
+    color: var(--green);
+    margin-bottom: 0.5rem;
+  }
+
+  .context-line {
+    font-size: clamp(0.85rem, 2.5vw, 1rem);
+    color: var(--text-mid);
+    font-weight: 600;
+    margin-bottom: 2rem;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    background: var(--text-dark);
+    color: var(--lemon);
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.2rem;
+    padding: 0.9rem 2.5rem;
+    border-radius: 3rem;
+    text-decoration: none;
+    transition: transform 0.2s, background 0.2s;
+    margin: 0.4rem;
+  }
+
+  .hero-cta:hover { transform: scale(1.05); background: var(--green); }
+
+  .hero-cta.secondary {
+    background: transparent;
+    border: 3px solid var(--text-dark);
+    color: var(--text-dark);
+  }
+
+  .hero-cta.secondary:hover { background: var(--text-dark); color: var(--lemon); }
+
+  /* ===== SECTIONS ===== */
+  section {
+    padding: 3rem 1.5rem;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'Fredoka One', cursive;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--lemon-deep);
+    margin-bottom: 0.4rem;
+  }
+
+  h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    color: var(--text-dark);
+    margin-bottom: 1.25rem;
+    line-height: 1.1;
+  }
+
+  .tbd {
+    display: inline-block;
+    background: var(--lemon);
+    border: 2px dashed var(--lemon-deep);
+    border-radius: 0.5rem;
+    padding: 0.15rem 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--lemon-deep);
+    letter-spacing: 0.05em;
+    vertical-align: middle;
+    margin-left: 0.4rem;
+  }
+
+  .tbd-block {
+    background: var(--warm-gray);
+    border: 2px dashed var(--lemon-dark);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    color: var(--text-mid);
+    font-style: italic;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+
+  /* ===== WHAT SECTION ===== */
+  .what-section { background: var(--warm-white); }
+
+  .fact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .fact-card {
+    background: var(--lemon);
+    border-radius: 1rem;
+    padding: 1.25rem;
+    text-align: center;
+  }
+
+  .fact-card .number {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2rem;
+    color: var(--text-dark);
+  }
+
+  .fact-card .label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-mid);
+    margin-top: 0.2rem;
+  }
+
+  /* ===== WHY SECTION ===== */
+  .why-section { background: var(--warm-gray); border-radius: 2rem; margin: 1rem; padding: 2.5rem 1.5rem; max-width: none; }
+  .why-section > div { max-width: 860px; margin: 0 auto; }
+
+  .why-lane {
+    border-left: 4px solid var(--lemon-dark);
+    padding: 1.25rem 1.25rem;
+    margin-bottom: 1.5rem;
+    background: white;
+    border-radius: 0 1rem 1rem 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+  .why-lane .contributor {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--lemon-deep);
+    margin-bottom: 0.4rem;
+  }
+
+  .why-lane h3 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+  }
+
+  /* ===== IMPACT STATEMENTS ===== */
+  .statements-section { background: var(--warm-white); }
+
+  .statements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .statement-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.25rem;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    border-top: 4px solid var(--lemon);
+    position: relative;
+  }
+
+  .statement-card.parent { border-top-color: var(--green-light); }
+
+  .statement-card .quote-mark {
+    font-family: 'Fredoka One', cursive;
+    font-size: 3rem;
+    color: var(--lemon);
+    line-height: 1;
+    margin-bottom: -0.5rem;
+  }
+
+  .statement-card.parent .quote-mark { color: var(--green-light); }
+
+  .statement-card p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-dark);
+    font-style: italic;
+  }
+
+  .statement-card .attribution {
+    margin-top: 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--text-mid);
+  }
+
+  /* ===== WORD CLOUD ===== */
+  .wordcloud-section {
+    background: var(--text-dark);
+    border-radius: 2rem;
+    margin: 1rem;
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+  }
+
+  .wordcloud-section h2 { color: var(--lemon); }
+  .wordcloud-section .section-label { color: var(--lemon-dark); }
+
+  #wordcloud-canvas {
+    width: 100%;
+    max-width: 700px;
+    height: 280px;
+    margin: 1.5rem auto 0;
+    display: block;
+    position: relative;
+  }
+
+  .word-item {
+    position: absolute;
+    font-family: 'Fredoka One', cursive;
+    transform: translate(-50%, -50%);
+    transition: transform 0.3s;
+    cursor: default;
+    white-space: nowrap;
+  }
+
+  .word-item:hover { transform: translate(-50%, -50%) scale(1.15); }
+
+  /* ===== LEMONADE STAND ===== */
+  .stand-section {
+    background: var(--green);
+    border-radius: 2rem;
+    margin: 1rem;
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    color: white;
+  }
+
+  .stand-section h2 { color: var(--lemon); }
+  .stand-section .section-label { color: var(--lemon-dark); }
+  .stand-emoji { font-size: 4rem; margin-bottom: 0.75rem; }
+
+  .stand-detail {
+    background: rgba(255,255,255,0.15);
+    border-radius: 1rem;
+    padding: 1rem;
+    margin: 1rem auto;
+    max-width: 500px;
+    font-weight: 700;
+    font-size: 1rem;
+  }
+
+  .proceeds-badge {
+    display: inline-block;
+    background: var(--lemon);
+    color: var(--text-dark);
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.4rem;
+    padding: 0.5rem 1.5rem;
+    border-radius: 3rem;
+    margin-top: 1rem;
+  }
+
+  /* ===== TSHIRT ===== */
+  .tshirt-section {
+    background: var(--lemon);
+    border-radius: 2rem;
+    margin: 1rem;
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+  }
+
+  /* ===== DONATE ===== */
+  .donate-section { text-align: center; }
+
+  .donate-btn {
+    display: inline-block;
+    background: var(--accent-red);
+    color: white;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.4rem;
+    padding: 1rem 3rem;
+    border-radius: 3rem;
+    text-decoration: none;
+    margin: 1rem 0.5rem;
+    transition: transform 0.2s;
+  }
+
+  .donate-btn:hover { transform: scale(1.05); }
+
+  .matching-box {
+    background: var(--warm-gray);
+    border: 2px solid var(--lemon-dark);
+    border-radius: 1rem;
+    padding: 1.25rem;
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-mid);
+  }
+
+  .matching-box strong { color: var(--text-dark); display: block; font-family: 'Fredoka One', cursive; font-size: 1.1rem; margin-bottom: 0.3rem; }
+
+  /* ===== SHARE ===== */
+  .share-section {
+    background: var(--text-dark);
+    border-radius: 2rem;
+    margin: 1rem;
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    color: white;
+  }
+
+  .share-section h2 { color: var(--lemon); }
+
+  .share-btn {
+    display: inline-block;
+    background: var(--lemon);
+    color: var(--text-dark);
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1rem;
+    padding: 0.8rem 2rem;
+    border-radius: 3rem;
+    text-decoration: none;
+    margin: 0.4rem;
+    transition: transform 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+
+  .share-btn:hover { transform: scale(1.05); }
+
+  /* ===== FOOTER ===== */
+  footer {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    font-size: 0.8rem;
+    color: var(--text-mid);
+    font-weight: 600;
+  }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes floatIn {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero > * { animation: floatIn 0.6s ease both; }
+  .hero .operation-label { animation-delay: 0.1s; }
+  .hero h1 { animation-delay: 0.2s; }
+  .hero .tagline { animation-delay: 0.3s; }
+  .hero .context-line { animation-delay: 0.35s; }
+  .hero .cta-group { animation-delay: 0.45s; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 600px) {
+    .why-section, .wordcloud-section, .stand-section, .tshirt-section, .share-section { margin: 0.5rem; border-radius: 1.5rem; }
+    .statements-grid { grid-template-columns: 1fr; }
+    .fact-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <div class="operation-label">Operation [TBD — Kaya names this! 🍋]</div>
+  <h1>Save Our Counselor</h1>
+  <div class="tagline">Making Lemonade Out of Lemons.</div>
+  <div class="context-line">Protecting Education & Childhood Development in Our Community</div>
+  <div class="cta-group">
+    <a href="#donate" class="hero-cta">Donate Now</a>
+    <a href="#share" class="hero-cta secondary">Share This</a>
+  </div>
+</div>
+
+<!-- ===== WHAT ===== -->
+<section class="what-section">
+  <div class="section-label">The Situation</div>
+  <h2>What's Happening</h2>
+  <p style="font-size:1.05rem; line-height:1.7; color:var(--text-mid); margin-bottom:1.5rem;">
+    Our school is at risk of losing one of its most important people — a licensed mental health professional who works with students every single day. This isn't just a counselor. This is a credentialed clinician (LMFT, LPCC, PPSC) who brings skills that most schools never have access to. And next year's budget may cut the role entirely.
+  </p>
+
+  <div class="fact-grid">
+    <div class="fact-card">
+      <div class="number">$<span class="tbd" style="font-size:1rem;">TBD</span></div>
+      <div class="label">Funding gap to keep this role</div>
+    </div>
+    <div class="fact-card">
+      <div class="number"><span class="tbd" style="font-size:1rem;">TBD</span></div>
+      <div class="label">Fund / Program this supports</div>
+    </div>
+    <div class="fact-card">
+      <div class="number">3</div>
+      <div class="label">Credentials: LMFT · LPCC · PPSC</div>
+    </div>
+    <div class="fact-card">
+      <div class="number">💛</div>
+      <div class="label">Kids whose lives have been changed</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WHY ===== -->
+<div class="why-section">
+  <div>
+    <div class="section-label">Why It Matters</div>
+    <h2>Voices From Our Community</h2>
+
+    <!-- 1. Kid lens -->
+    <div class="why-lane">
+      <div class="contributor">🍋 Kaya — Student</div>
+      <h3>In My Own Words</h3>
+      <div class="tbd-block">
+        TBD — Kaya writes this this weekend. His words. His voice. This opens everything. ✏️
+      </div>
+    </div>
+
+    <!-- 2. Early childhood education -->
+    <div class="why-lane">
+      <div class="contributor">📚 Lea — Early Childhood Education Specialist</div>
+      <h3>Why It Starts Early</h3>
+      <div class="tbd-block">
+        TBD — Lea's perspective on why foundational EQ scaffolding matters and why this role is part of healthy child development infrastructure. ✏️
+      </div>
+    </div>
+
+    <!-- 3. Clinical lens -->
+    <div class="why-lane">
+      <div class="contributor">🏥 Ms. Nishimi — LMFT #138874 · LPCC #14711 · PPSC</div>
+      <h3>What This Role Actually Does</h3>
+      <div class="tbd-block">
+        TBD — Ms. Nishimi's own statement about what credentialed clinical mental health support in a school setting provides that a standard counselor cannot. She is the expert. Her voice here carries real authority. ✏️
+      </div>
+    </div>
+
+    <!-- 4. Parent/community lens -->
+    <div class="why-lane">
+      <div class="contributor">👨‍👩‍👧 Frank & Erika — Parents</div>
+      <h3>What Our Community Stands to Lose</h3>
+      <div class="tbd-block">
+        TBD — Frank and Erika's statement on what disappears from the whole school ecosystem when this role is cut — not just for their family, but for every family. ✏️
+      </div>
+    </div>
+
+    <!-- 5. Future of education -->
+    <div class="why-lane">
+      <div class="contributor">🤖 Lindsay — Healthcare AI Governance & Education Advocate</div>
+      <h3>The Future of Education Needs This</h3>
+      <div class="tbd-block">
+        TBD — Lindsay's perspective connecting EQ and mental health infrastructure to the future of AI in education. As AI takes over more instructional functions, human scaffolding becomes MORE critical, not less. Reference: HAI zoom on education [link TBD]. This one's for the tech parents — and it lands harder because they've read everything above first. ✏️
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== KIDS IMPACT STATEMENTS ===== -->
+<section class="statements-section">
+  <div class="section-label">From the Kids</div>
+  <h2>What Students Say 🍋</h2>
+  <p style="color:var(--text-mid); font-size:0.9rem; margin-bottom:0.5rem;">Real words from real kids. More coming this weekend.</p>
+
+  <!--
+  ============================================================
+  HOW TO ADD A KID IMPACT STATEMENT:
+  Copy the block below and paste it inside .statements-grid.
+  Fill in: first name, grade, and their statement.
+  ============================================================
+  <div class="statement-card">
+    <div class="quote-mark">"</div>
+    <p>Their statement goes here.</p>
+    <div class="attribution">— [First Name], Grade [X]</div>
+  </div>
+  ============================================================
+  -->
+
+  <div class="statements-grid" id="kid-statements">
+    <div class="statement-card">
+      <div class="quote-mark">"</div>
+      <p>When I was having a really hard time, he was the one person at school I could actually talk to. He helped me figure out my feelings without making me feel weird about it.</p>
+      <div class="attribution">— Kaya, Grade <span class="tbd">TBD</span></div>
+    </div>
+    <div class="statement-card">
+      <div class="quote-mark">"</div>
+      <p>I meet with him every week. He teaches me how to handle stuff that makes me anxious. I don't know what I'd do without those meetings.</p>
+      <div class="attribution">— Student, Grade TBD</div>
+    </div>
+    <div class="statement-card">
+      <div class="quote-mark">"</div>
+      <p>He never makes you feel bad for being upset. He just helps you understand why you feel that way and what to do about it. That's really hard to find.</p>
+      <div class="attribution">— Ziya, Grade <span class="tbd">TBD</span></div>
+    </div>
+    <div class="statement-card">
+      <div class="quote-mark">"</div>
+      <p>I used to get in trouble a lot for getting too frustrated. He taught me ways to slow down before I react. I haven't been sent to the office in months.</p>
+      <div class="attribution">— Student, Grade TBD</div>
+    </div>
+    <div class="statement-card">
+      <div class="quote-mark">"</div>
+      <p>When something hard happened in my family, I didn't know who to talk to at school. He made a safe space for me every single week. I actually looked forward to it.</p>
+      <div class="attribution">— Student, Grade TBD</div>
+    </div>
+    <div class="statement-card">
+      <div class="quote-mark">"</div>
+      <p>He taught our whole class about emotions and how they work in your brain. I think about that stuff all the time now. It made me smarter about myself.</p>
+      <div class="attribution">— Student, Grade TBD</div>
+    </div>
+    <div class="statement-card" style="border-style: dashed; background: var(--warm-gray); box-shadow:none;">
+      <div class="quote-mark" style="color:var(--lemon-dark);">"</div>
+      <p style="color:var(--text-mid);">More coming this weekend — add your student's voice! ✏️</p>
+      <div class="attribution" style="color:var(--lemon-deep);">— Your kid here</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PARENT IMPACT STATEMENTS ===== -->
+<section class="statements-section" style="background: var(--warm-gray); border-radius: 2rem; margin: 1rem; padding: 2.5rem 1.5rem; max-width:none;">
+  <div style="max-width:860px; margin:0 auto;">
+    <div class="section-label">From the Parents</div>
+    <h2>What Families Say 💛</h2>
+    <p style="color:var(--text-mid); font-size:0.9rem; margin-bottom:0.5rem;">Gathered from our community. Add yours below.</p>
+
+    <!--
+    ============================================================
+    HOW TO ADD A PARENT IMPACT STATEMENT:
+    Copy the block below and paste it inside .statements-grid.
+    Fill in: parent name (or "Parent of [Child's Name]") and statement.
+    ============================================================
+    <div class="statement-card parent">
+      <div class="quote-mark">"</div>
+      <p>Their statement goes here.</p>
+      <div class="attribution">— [Parent Name] or Parent of [Child Name]</div>
+    </div>
+    ============================================================
+    -->
+
+    <div class="statements-grid" id="parent-statements">
+      <div class="statement-card parent">
+        <div class="quote-mark">"</div>
+        <p>As a parent I've watched my child grow in emotional maturity this year in ways I wasn't expecting. That doesn't happen by accident. It happens because someone skilled is doing real work with these kids every week.</p>
+        <div class="attribution">— Parent of Kaya <span class="tbd">✏️</span></div>
+      </div>
+      <div class="statement-card parent">
+        <div class="quote-mark">"</div>
+        <p>Our family has seen such a difference this year. My child comes home with actual language for their feelings — tools I wish I'd had at that age. This role is irreplaceable.</p>
+        <div class="attribution">— Parent of Ziya <span class="tbd">✏️</span></div>
+      </div>
+      <div class="statement-card parent">
+        <div class="quote-mark">"</div>
+        <p>My son has struggled with anxiety since he was little. For the first time, he has a person at school he trusts completely. Cutting this role doesn't save money — it shifts the cost onto our kids and onto us.</p>
+        <div class="attribution">— Parent of Student</div>
+      </div>
+      <div class="statement-card parent">
+        <div class="quote-mark">"</div>
+        <p>We moved here recently and my daughter had a really hard transition. He was the first adult at this school she opened up to. That kind of trust takes skill. You can't replace it with a budget line item.</p>
+        <div class="attribution">— Parent of Student</div>
+      </div>
+      <div class="statement-card parent">
+        <div class="quote-mark">"</div>
+        <p>I work in tech. I think about systems all day. This role is load-bearing infrastructure for our school community. You don't notice it until it's gone — and then everything downstream gets harder.</p>
+        <div class="attribution">— Parent of Student</div>
+      </div>
+      <div class="statement-card parent">
+        <div class="quote-mark">"</div>
+        <p>What he does isn't just counseling — it's teaching emotional literacy to a whole generation of kids. That's a public health investment. Cutting it to save a line item is a false economy.</p>
+        <div class="attribution">— Parent of Student</div>
+      </div>
+      <div class="statement-card parent">
+        <div class="quote-mark">"</div>
+        <p>My kids talk about what they learn in his sessions at the dinner table. That doesn't happen with most things from school. Whatever he's doing, it's sticking. That matters.</p>
+        <div class="attribution">— Parent of Student</div>
+      </div>
+      <div class="statement-card parent" style="border-style: dashed; background: white; box-shadow:none;">
+        <div class="quote-mark" style="color:var(--green-light);">"</div>
+        <p style="color:var(--text-mid);">Add your family's voice — from Emily, Monica, and every parent who wants to be part of this. ✏️</p>
+        <div class="attribution" style="color:var(--green);">— Your family here</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WORD CLOUD ===== -->
+<div class="wordcloud-section">
+  <div class="section-label">What Our Community Keeps Saying</div>
+  <h2>The Words That Matter</h2>
+  <p style="color:rgba(255,255,255,0.7); font-size:0.9rem;">Themes from every voice in this campaign — kids and parents together.</p>
+  <div id="wordcloud-canvas" style="position:relative; height:300px;"></div>
+</div>
+
+<!-- ===== LEMONADE STAND ===== -->
+<div class="stand-section">
+  <div class="stand-emoji">🍋🥤</div>
+  <div class="section-label">The Hustle</div>
+  <h2>The Lemonade Stand</h2>
+  <p style="color:rgba(255,255,255,0.85); font-size:1rem; max-width:480px; margin: 0 auto 1rem;">Kaya and friends are running a real lemonade and frozen ice stand. Come thirsty. Bring cash. Bring your neighbors.</p>
+
+  <div class="stand-detail">
+    📅 Date: <span class="tbd">TBD — this weekend!</span><br>
+    📍 Location: <span class="tbd">TBD</span><br>
+    ⏰ Time: <span class="tbd">TBD</span>
+  </div>
+
+  <div class="proceeds-badge">Proceeds go directly to the school 🍋</div>
+</div>
+
+<!-- ===== TSHIRT ===== -->
+<div class="tshirt-section">
+  <div class="section-label">Wear It</div>
+  <h2>Get Your Operation Shirt 👕</h2>
+  <p style="color:var(--text-mid); font-size:1rem; max-width:480px; margin:0 auto 1.25rem;">
+    Rock the campaign. Yellow shirts with a QR code right on the back — scan to join the movement. Kids, parents, neighbors. The more the merrier.
+  </p>
+  <p style="font-size:0.95rem; font-weight:700; color:var(--text-dark); margin-bottom:0.5rem;">Want a shirt or want to help make them happen?</p>
+  <a href="/cdn-cgi/l/email-protection#462936233427322f292832242206212b272f2a6825292b" class="hero-cta" style="font-size:1rem;">
+    📧 <span class="__cf_email__" data-cfemail="e48b94819685908d8b8a908680a48389858d88ca878b89">[email&#160;protected]</span>
+  </a>
+  <p style="font-size:0.78rem; color:var(--text-mid); margin-top:0.75rem;">(Email address updates once Kaya names the operation this weekend 🍋)</p>
+</div>
+
+<!-- ===== DONATE ===== -->
+<section class="donate-section" id="donate">
+  <div class="section-label">Take Action</div>
+  <h2>Support the Campaign</h2>
+  <p style="color:var(--text-mid); font-size:1rem; max-width:500px; margin:0 auto 1.25rem; line-height:1.6;">
+    Every dollar goes toward keeping this role funded. Donate directly to the school fund below.
+  </p>
+  <a href="#" class="donate-btn">💛 Donate Now <span class="tbd">link TBD</span></a>
+
+  <div class="matching-box">
+    <strong>🏢 Does Your Employer Match Donations?</strong>
+    Many companies — including some right here in our community — will match employee donations to schools dollar for dollar. Check your company's matching gift program and double your impact. It takes five minutes and costs you nothing extra.
+  </div>
+</section>
+
+<!-- ===== SHARE ===== -->
+<div class="share-section" id="share">
+  <div class="section-label">Spread the Word</div>
+  <h2>Share This Campaign</h2>
+  <p style="color:rgba(255,255,255,0.75); max-width:480px; margin:0 auto 1.5rem; font-size:0.95rem;">
+    The more people who see this, the better our chances. Send it to every parent, neighbor, and friend you've got.
+  </p>
+  <button class="share-btn" onclick="copyLink()">📋 Copy Link</button>
+  <a href="/cdn-cgi/l/email-protection#18276b6d7a727d7b6c25507d7468384b796e7d38576d6a384b7b70777774385b776d766b7d74776a3e7a777c6125576d6a3873717c6b38767d7d7c3861776d6a38707d746836385b707d7b73386c70716b38776d6c2238434b514c5d384d4a54384c5a5c45" class="share-btn">📧 Share by Email</a>
+  <p id="copy-confirm" style="color:var(--lemon); margin-top:0.75rem; font-weight:700; display:none;">✅ Link copied!</p>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  Operation [TBD] · Making Lemonade Out of Lemons · Protecting Education & Childhood Development in Our Community<br>
+  <span style="color:var(--lemon-deep);">Built by Kaya and friends 🍋</span>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ===== WORD CLOUD =====
+// Add words and their weight (1-10) here as statements come in.
+// The cloud auto-renders from this list.
+const words = [
+  { text: 'connection', weight: 9 },
+  { text: 'safe', weight: 8 },
+  { text: 'listened', weight: 7 },
+  { text: 'anxiety', weight: 6 },
+  { text: 'feelings', weight: 9 },
+  { text: 'growth', weight: 7 },
+  { text: 'trust', weight: 8 },
+  { text: 'helped', weight: 10 },
+  { text: 'skills', weight: 6 },
+  { text: 'calm', weight: 7 },
+  { text: 'understood', weight: 8 },
+  { text: 'community', weight: 6 },
+  { text: 'irreplaceable', weight: 5 },
+  { text: 'weekly', weight: 4 },
+  { text: 'confident', weight: 6 },
+  { text: 'healing', weight: 5 },
+  { text: 'lemonade', weight: 4 },
+];
+
+const colors = ['#FFE135','#F5C800','#7EB55A','#FF8C42','#ffffff','#FFD700','#5B8C3E'];
+
+function renderWordCloud() {
+  const container = document.getElementById('wordcloud-canvas');
+  const W = container.offsetWidth || 340;
+  const H = 300;
+  container.style.height = H + 'px';
+
+  const maxW = Math.max(...words.map(w => w.weight));
+  const sorted = [...words].sort((a,b) => b.weight - a.weight);
+  const placed = [];
+
+  sorted.forEach((word, i) => {
+    const el = document.createElement('span');
+    el.className = 'word-item';
+    const size = 14 + (word.weight / maxW) * 32;
+    el.style.fontSize = size + 'px';
+    el.style.color = colors[i % colors.length];
+    el.style.opacity = 0.7 + (word.weight / maxW) * 0.3;
+    el.textContent = word.text;
+    container.appendChild(el);
+
+    // Try to place without overlap
+    let placed_ok = false;
+    for (let attempt = 0; attempt < 80; attempt++) {
+      const x = size/2 + Math.random() * (W - size);
+      const y = size/2 + Math.random() * (H - size);
+      const w = word.text.length * size * 0.6;
+      const h = size * 1.2;
+
+      const overlap = placed.some(p =>
+        Math.abs(p.x - x) < (p.w/2 + w/2 + 8) &&
+        Math.abs(p.y - y) < (p.h/2 + h/2 + 4)
+      );
+
+      if (!overlap) {
+        el.style.left = x + 'px';
+        el.style.top = y + 'px';
+        placed.push({x, y, w, h});
+        placed_ok = true;
+        break;
+      }
+    }
+    if (!placed_ok) { el.remove(); }
+  });
+}
+
+window.addEventListener('load', renderWordCloud);
+window.addEventListener('resize', () => {
+  const c = document.g
