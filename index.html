@@ -639,12 +639,12 @@
 
   <div style="display:flex; flex-wrap:wrap; gap:0.75rem; justify-content:center; margin-bottom:1.5rem;">
     <button class="share-btn" onclick="copyLink()">📋 Copy Link</button>
-    <a href="mailto:?subject=Help Save Our School Counselors — Operation Squeeze&body=Our kids need your help. Check this out: https://lindsayguvenc-coder.github.io/LemonadeForLemons/" class="share-btn">📧 Email</a>
+    <a href="/cdn-cgi/l/email-protection#1c236f697e76797f68215479706c3c4f7d6a793c53696e3c4f7f747373703c5f7369726f7970736e6f3cfe9c883c536c796e7d687573723c4f6d69797966793a7e7378652153696e3c7775786f3c727979783c6573696e3c7479706c323c5f74797f773c6874756f3c736968263c7468686c6f263333707572786f7d657b696a79727f317f7378796e327b756874697e3275733350797173727d78795a736e50797173726f33" class="share-btn">📧 Email</a>
     <a href="https://www.facebook.com/sharer/sharer.php?u=https://lindsayguvenc-coder.github.io/LemonadeForLemons/" target="_blank" class="share-btn">📘 Facebook</a>
     <a href="https://twitter.com/intent/tweet?text=Our+kids+are+fighting+to+save+their+school+counselors.+Operation+Squeeze+🍋&url=https://lindsayguvenc-coder.github.io/LemonadeForLemons/" target="_blank" class="share-btn">🐦 X / Twitter</a>
     <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://lindsayguvenc-coder.github.io/LemonadeForLemons/" target="_blank" class="share-btn">💼 LinkedIn</a>
     <a href="https://api.whatsapp.com/send?text=Our+kids+are+fighting+to+save+their+school+counselors.+Check+this+out+🍋+https://lindsayguvenc-coder.github.io/LemonadeForLemons/" target="_blank" class="share-btn">💬 WhatsApp</a>
-    <a href="sms:?body=Our+kids+are+fighting+to+save+their+school+counselors.+Check+this+out+🍋+https://lindsayguvenc-coder.github.io/LemonadeForLemons/" class="share-btn">💬 Text</a>
+    <a href="sms:?&body=Our%20kids%20are%20fighting%20to%20save%20their%20school%20counselors.%20Check%20this%20out!%20https%3A%2F%2Flindayguvenc-coder.github.io%2FLemonadeForLemons%2F" class="share-btn">💬 Text</a>
   </div>
 
   <p id="copy-confirm" style="color:var(--lemon); margin-top:0.75rem; font-weight:700; display:none;">✅ Link copied!</p>
@@ -795,7 +795,7 @@
   <span style="color:var(--lemon-deep);">Built by Kaya and friends 🍋</span>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ===== WORD CLOUD =====
 // Add words and their weight (1-10) here as statements come in.
 // The cloud auto-renders from this list.
@@ -855,17 +855,4 @@ function renderWordCloud() {
       );
 
       if (!overlap) {
-        el.style.left = x + 'px';
-        el.style.top = y + 'px';
-        placed.push({x, y, w, h});
-        placed_ok = true;
-        break;
-      }
-    }
-    if (!placed_ok) { el.remove(); }
-  });
-}
-
-window.addEventListener('load', renderWordCloud);
-window.addEventListener('resize', () => {
-  const c = document.g
+        el.style.left
