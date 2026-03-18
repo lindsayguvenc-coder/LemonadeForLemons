@@ -749,27 +749,78 @@
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ===== WORD CLOUD =====
-// Add words and their weight (1-10) here as statements come in.
-// The cloud auto-renders from this list.
-const words = [
-  { text: 'connection', weight: 9 },
-  { text: 'safe', weight: 8 },
-  { text: 'listened', weight: 7 },
-  { text: 'anxiety', weight: 6 },
-  { text: 'feelings', weight: 9 },
-  { text: 'growth', weight: 7 },
-  { text: 'trust', weight: 8 },
-  { text: 'helped', weight: 10 },
-  { text: 'skills', weight: 6 },
-  { text: 'calm', weight: 7 },
-  { text: 'understood', weight: 8 },
-  { text: 'community', weight: 6 },
-  { text: 'irreplaceable', weight: 5 },
-  { text: 'weekly', weight: 4 },
-  { text: 'confident', weight: 6 },
-  { text: 'healing', weight: 5 },
-  { text: 'lemonade', weight: 4 },
-];
+// Auto-generates from all statement card text on the page.
+// Just add new statement cards and the cloud updates automatically!
+
+const STOP_WORDS = new Set([
+  // Common words
+  'a','an','the','and','or','but','in','on','at','to','for','of','with',
+  'his','her','their','our','my','your','its','we','he','she','they','i',
+  'it','is','was','are','were','be','been','being','have','has','had',
+  'do','does','did','will','would','could','should','may','might','can',
+  'not','no','so','if','as','by','from','up','about','into','than','then',
+  'that','this','these','those','what','who','how','when','where','there',
+  'just','more','also','very','too','all','any','each','even','most','out',
+  'one','two','three','get','got','make','made','know','think','come',
+  'go','see','say','said','him','them','us','me','you','tbd','coming','soon',
+  'own','words','statement','something','every','still','back',
+  'after','first','well','way','because','really','much','only','never',
+  // Names — add any new names here to keep them out of the word cloud
+  'kaya','ziya','holden','monica','emily','frank','erika','lea','lindsay',
+  'nishimi','hari','subramonyam','moraga','rheem','mef','pbis',
+]);
+
+function extractWords() {
+  const cards = document.querySelectorAll('.statement-card p');
+  const freq = {};
+  cards.forEach(card => {
+    const text = card.innerText.toLowerCase().replace(/[^a-z\s]/g, ' ');
+    text.split(/\s+/).forEach(word => {
+      if (word.length > 3 && !STOP_WORDS.has(word)) {
+        freq[word] = (freq[word] || 0) + 1;
+      }
+    });
+  });
+  // Convert to array and normalize weights 1-10
+  const entries = Object.entries(freq).filter(([w, c]) => c > 0);
+  if (entries.length === 0) return getDefaultWords();
+  const max = Math.max(...entries.map(([,c]) => c));
+  return entries
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 30)
+    .map(([text, count]) => ({
+      text,
+      weight: Math.max(1, Math.round((count / max) * 10))
+    }));
+}
+
+function getDefaultWords() {
+  // Seeded from real Why It Matters content already on the page
+  return [
+    { text: 'care', weight: 10 },
+    { text: 'support', weight: 10 },
+    { text: 'counselor', weight: 9 },
+    { text: 'community', weight: 9 },
+    { text: 'safe', weight: 8 },
+    { text: 'feelings', weight: 8 },
+    { text: 'kids', weight: 8 },
+    { text: 'families', weight: 7 },
+    { text: 'learning', weight: 7 },
+    { text: 'trust', weight: 7 },
+    { text: 'anxiety', weight: 6 },
+    { text: 'struggle', weight: 6 },
+    { text: 'focused', weight: 6 },
+    { text: 'healthier', weight: 6 },
+    { text: 'layer', weight: 5 },
+    { text: 'precondition', weight: 5 },
+    { text: 'relational', weight: 5 },
+    { text: 'irreplaceable', weight: 5 },
+    { text: 'disappears', weight: 5 },
+    { text: 'present', weight: 4 },
+  ];
+}
+
+const words = extractWords();
 
 const colors = ['#FFE135','#F5C800','#7EB55A','#FF8C42','#ffffff','#FFD700','#5B8C3E'];
 
@@ -778,6 +829,7 @@ function renderWordCloud() {
   const W = container.offsetWidth || 340;
   const H = 300;
   container.style.height = H + 'px';
+  container.innerHTML = '';
 
   const maxW = Math.max(...words.map(w => w.weight));
   const sorted = [...words].sort((a,b) => b.weight - a.weight);
@@ -786,25 +838,50 @@ function renderWordCloud() {
   sorted.forEach((word, i) => {
     const el = document.createElement('span');
     el.className = 'word-item';
-    const size = 14 + (word.weight / maxW) * 32;
+    const size = 14 + (word.weight / maxW) * 28;
     el.style.fontSize = size + 'px';
     el.style.color = colors[i % colors.length];
-    el.style.opacity = 0.7 + (word.weight / maxW) * 0.3;
+    el.style.opacity = 0.75 + (word.weight / maxW) * 0.25;
     el.textContent = word.text;
+    // Measure word before placing
+    el.style.visibility = 'hidden';
+    el.style.left = '0px';
+    el.style.top = '0px';
     container.appendChild(el);
+    const ww = el.offsetWidth;
+    const wh = el.offsetHeight;
 
-    // Try to place without overlap
     let placed_ok = false;
-    for (let attempt = 0; attempt < 80; attempt++) {
-      const x = size/2 + Math.random() * (W - size);
-      const y = size/2 + Math.random() * (H - size);
-      const w = word.text.length * size * 0.6;
-      const h = size * 1.2;
+    for (let attempt = 0; attempt < 120; attempt++) {
+      // Keep fully inside with padding
+      const pad = 8;
+      const x = pad + ww/2 + Math.random() * (W - ww - pad*2);
+      const y = pad + wh/2 + Math.random() * (H - wh - pad*2);
 
       const overlap = placed.some(p =>
-        Math.abs(p.x - x) < (p.w/2 + w/2 + 8) &&
-        Math.abs(p.y - y) < (p.h/2 + h/2 + 4)
+        Math.abs(p.x - x) < (p.w/2 + ww/2 + 6) &&
+        Math.abs(p.y - y) < (p.h/2 + wh/2 + 4)
       );
 
       if (!overlap) {
-        el.style.left
+        el.style.left = x + 'px';
+        el.style.top = y + 'px';
+        el.style.visibility = 'visible';
+        placed.push({x, y, w: ww, h: wh});
+        placed_ok = true;
+        break;
+      }
+    }
+    if (!placed_ok) { el.remove(); }
+  });
+}
+
+window.addEventListener('load', renderWordCloud);
+window.addEventListener('resize', () => {
+  const c = document.getElementById('wordcloud-canvas');
+  c.innerHTML = '';
+  renderWordCloud();
+});
+</script>
+</body>
+</html>
